@@ -45,8 +45,16 @@ bench/lookup_bench --dir /mnt/indexed/n1000 --files 1000 \
 - Each generated positive filename is used once per pass. If fewer positive
   queries than files are requested, their IDs are selected from a seeded random
   permutation of the full file set, rather than only the start of the directory.
-- Each negative filename is distinct within the pass and includes the seed.
-  The mixed positive/negative query sequence is deterministically shuffled.
+- Each negative filename is distinct within the pass: `file_%08d` with IDs from
+  `files` through `files + negative - 1`, outside the fixture's existing range.
+  Positive and negative names therefore have the same prefix and 13-byte length,
+  preventing all negative names from being rejected by a name-length mismatch.
+  The CLI rejects `files + negative > 100000000` to preserve eight-digit IDs.
+- The seed controls positive-file sampling and query shuffling, not the negative
+  name set. Negative names are reused across trials. Requested dcache reclamation
+  and the separate kernel-call profiling pass must establish cache misses; a
+  changed seed alone does not make repeated negative names cold. Within `warm`
+  trials, reuse is intentional so the negative dentries are warm.
 - `--names FILE` instead accepts `1 filename` or `0 filename` lines; names are
   individual path components. This permits exact replay. Such a manifest can
   include repeats, so uniqueness is the caller's responsibility in that mode.

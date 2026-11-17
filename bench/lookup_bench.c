@@ -115,10 +115,11 @@ static size_t run_pass(int fd, const struct query *q, size_t n,
 static void usage(const char *prog) {
     fprintf(stderr,
       "Usage: %s --dir DIR [--files N --positive N --negative N | --names FILE]\n"
-      "  Generated hits: file_00000000..file_(N-1); misses: absent_SEED_INDEX\n"
+      "  Generated hits: file_00000000..file_(N-1); misses: file_N onward\n"
+      "  All generated names have 8-digit IDs; files+negative <= 100000000\n"
       "  --positive defaults to --files; --negative defaults to --files\n"
       "  --names FILE: lines '1 filename' (regular file) or '0 filename' (ENOENT)\n"
-      "  --seed N       deterministic shuffle/name seed (default 1)\n"
+      "  --seed N       deterministic sample/shuffle seed (default 1)\n"
       "  --repeat N     measured passes (default 1; later passes reuse names/cache)\n"
       "  --warmup N     untimed passes over the same names (default 0)\n"
       "  --warm-dir     enumerate names before timing; does not stat child files\n"
@@ -177,6 +178,8 @@ int main(int argc, char **argv) {
         if(positive==SIZE_MAX)positive=files;
         if(negative==SIZE_MAX)negative=files;
         if(positive>files)fail("--positive cannot exceed --files (hits remain unique per pass)");
+        if(files>100000000 || negative>100000000-files)
+            fail("generated names require --files + --negative <= 100000000 (8-digit IDs)");
         size_t *ids=allocate(files,sizeof(*ids));
         for(size_t i=0;i<files;i++)ids[i]=i;
         for(size_t i=files;i>1;i--){size_t j=random64()%i,tmp=ids[i-1];ids[i-1]=ids[j];ids[j]=tmp;}
@@ -186,7 +189,7 @@ int main(int argc, char **argv) {
         }
         free(ids);
         for(size_t i=0;i<negative;i++) {
-            char name[128];snprintf(name,sizeof name,"absent_%016" PRIx64 "_%08zu",seed,i);
+            char name[128];snprintf(name,sizeof name,"file_%08zu",files+i);
             append(&q,&n,&cap,name,0);
         }
     }
