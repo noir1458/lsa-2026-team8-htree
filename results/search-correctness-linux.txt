@@ -1,0 +1,5 @@
+environment=Linux x86_64
+compiler=cc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+sanitizers=address,undefined
+scope=extracted kernel search helpers; not a kernel build or filesystem test
+exact_kernel_helper_checks=527360 passed

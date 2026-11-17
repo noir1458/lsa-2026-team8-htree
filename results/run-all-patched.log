@@ -1,0 +1,8 @@
+phase=mutation-correctness
+phase=settle
+phase=policy-timing
+phase=index-control
+phase=profile
+phase=micro
+phase=filesystem-check
+phase=complete

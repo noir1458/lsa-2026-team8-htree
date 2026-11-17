@@ -1,0 +1,4 @@
+--------------e----- /home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n100
+-----------I--e----- /home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n1000
+-----------I--e----- /home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n10000
+-----------I--e----- /home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n100000

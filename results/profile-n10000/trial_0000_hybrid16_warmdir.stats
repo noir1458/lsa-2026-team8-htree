@@ -1,0 +1,1 @@
+find=20000 dx_lookup=20000 probe=20000 nodes=20000 count_sum=1660000 binary_nodes=20000 linear_nodes=0 comparisons=129006 leaf_blocks=20000 leaf_entries=1899968 leaf_errors=0 mismatches=0 count_1=0 count_2=0 count_3_4=0 count_5_8=0 count_9_16=0 count_17_32=0 count_33_64=0 count_65_128=20000 count_129_256=0 count_257_512=0 count_513_plus=0

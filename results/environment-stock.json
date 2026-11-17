@@ -1,0 +1,26 @@
+{
+  "utc": "2026-11-17T16:51:10.351601+00:00",
+  "kernel": "5.4.214-b0",
+  "machine": "x86_64",
+  "cpu_count": 2,
+  "cpu": {
+    "vendor_id": "GenuineIntel",
+    "model name": "Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz",
+    "cpu MHz": "3392.148",
+    "cache size": "8192 KB",
+    "siblings": "2",
+    "cpu cores": "2",
+    "flags": "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm invpcid_single pti fsgsbase bmi1 avx2 bmi2 invpcid arat md_clear flush_l1d"
+  },
+  "memory": "MemTotal:        4027060 kB\nMemFree:         2498172 kB\nMemAvailable:    3135372 kB\nBuffers:           67400 kB\nCached:           750996 kB\nSwapCached:            0 kB\nActive:           817712 kB\nInactive:         524096 kB\nActive(anon):     524380 kB\nInactive(anon):     2552 kB\nActive(file):     293332 kB\nInactive(file):   521544 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       2097148 kB\nSwapFree:        2097148 kB\nDirty:                 4 kB\nWriteback:             0 kB\nAnonPages:        523416 kB\nMapped:           285108 kB\nShmem:              3524 kB\nKReclaimable:      50820 kB\nSlab:             117300 kB\nSReclaimable:      50820 kB\nSUnreclaim:        66480 kB\nKernelStack:        7200 kB\nPageTables:        11020 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     4110676 kB\nCommitted_AS:    3356940 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       34368 kB\nVmallocChunk:          0 kB\nPercpu:             1528 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:      151488 kB\nDirectMap2M:     4042752 kB\n",
+  "uptime": "267.61 413.37",
+  "loadavg": [
+    0.16,
+    0.26,
+    0.13
+  ],
+  "gcc": "gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0",
+  "os_release": "NAME=\"Ubuntu\"\nVERSION=\"20.04.6 LTS (Focal Fossa)\"\nID=ubuntu\nID_LIKE=debian\nPRETTY_NAME=\"Ubuntu 20.04.6 LTS\"\nVERSION_ID=\"20.04\"\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nVERSION_CODENAME=focal\nUBUNTU_CODENAME=focal\n",
+  "virtualization": "oracle",
+  "note": "Hostname and login identity intentionally omitted."
+}

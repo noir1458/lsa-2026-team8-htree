@@ -1,0 +1,9 @@
+{
+  "observed_at": "2026-11-18T02:17:41+09:00",
+  "original_course_kernel_restored": true,
+  "original_default_boot_entry_preserved": true,
+  "experimental_images_mounted": false,
+  "experimental_policy_before_reboot": {"mode": 0, "linear_limit": 8, "profiling": false},
+  "experimental_kernel_sources_and_images_retained": true,
+  "note": "Existing coursework and readahead source trees were not modified."
+}

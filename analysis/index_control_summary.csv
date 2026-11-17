@@ -1,0 +1,9 @@
+phase,directory_files,dataset,kernel,cache_mode,label,trials,unique_rounds,validation,loop_ns_per_query_median,loop_ns_per_query_min,loop_ns_per_query_max,mean_syscall_ns_median,mean_syscall_ns_min,mean_syscall_ns_max,p50_syscall_ns_median,p50_syscall_ns_min,p50_syscall_ns_max,p95_syscall_ns_median,p95_syscall_ns_min,p95_syscall_ns_max
+index-control,1000,index-control-n1000,5.4.214-htree1,warm,indexed,6,6,PASS,1270.679,838.18,1576.8595,1222.74,814.126,1513.816,1074.5,805.0,1525.0,1783.5,1018.0,1943.0
+index-control,1000,index-control-n1000,5.4.214-htree1,warm,unindexed,6,6,PASS,947.2539999999999,848.684,1534.3985,921.2755,824.708,1474.144,854.5,800.0,1542.0,1220.5,1030.0,1877.0
+index-control,1000,index-control-n1000,5.4.214-htree1,warmdir,indexed,6,6,PASS,9607.08725,7960.6295,10209.191,9548.3655,7905.177,10148.694,9605.0,8922.0,9908.0,13320.0,12634.0,13448.0
+index-control,1000,index-control-n1000,5.4.214-htree1,warmdir,unindexed,6,6,PASS,50371.67675,45951.925,58189.8285,50309.1645,45893.574,58118.686,60538.0,59290.0,60552.0,71841.5,68883.0,154132.0
+index-control,10000,index-control-n10000,5.4.214-htree1,warm,indexed,6,6,PASS,1526.93435,1490.00065,1698.0011,1466.797,1430.459,1638.23,1258.0,1246.0,1557.0,1823.5,1791.0,1834.0
+index-control,10000,index-control-n10000,5.4.214-htree1,warm,unindexed,6,6,PASS,1503.953975,1481.50035,1558.394,1443.187,1422.527,1496.447,1267.0,1238.0,1555.0,1802.0,1780.0,1848.0
+index-control,10000,index-control-n10000,5.4.214-htree1,warmdir,indexed,6,6,PASS,10188.767175,10019.01275,10304.01725,10127.357,9955.71,10240.16,9890.5,9810.0,9976.0,13866.0,13700.0,14053.0
+index-control,10000,index-control-n10000,5.4.214-htree1,warmdir,unindexed,6,6,PASS,443173.36487499997,440937.16395,444540.26565,443103.251,440862.101,444467.72,544965.5,544821.0,545811.0,616368.0,608604.0,617562.0

@@ -1,0 +1,49 @@
+{
+  "bench": "/home/EXPERIMENT_USER/lsa-htree/bench/lookup_bench",
+  "condition": [
+    "indexed=/home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n1000",
+    "unindexed=/home/EXPERIMENT_USER/lsa-htree/fixtures/linear/n1000"
+  ],
+  "files": 1000,
+  "positive": 1000,
+  "negative": 1000,
+  "modes": "warmdir,warm",
+  "rounds": 6,
+  "seed": 20261118,
+  "drop_caches": 2,
+  "cpu": 0,
+  "before_hook": "/home/EXPERIMENT_USER/lsa-htree/scripts/bench_before.sh",
+  "after_hook": "/home/EXPERIMENT_USER/lsa-htree/scripts/bench_after.sh",
+  "timeout": 120,
+  "output": "/home/EXPERIMENT_USER/lsa-htree/results/index-control-n1000",
+  "uname": [
+    "Linux",
+    "EXPERIMENT_USER-VirtualBox",
+    "5.4.214-htree1",
+    "#1 SMP Wed Nov 18 01:05:40 KST 2026",
+    "x86_64",
+    "x86_64"
+  ],
+  "conditions": [
+    {
+      "label": "indexed",
+      "directory": "/home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n1000"
+    },
+    {
+      "label": "unindexed",
+      "directory": "/home/EXPERIMENT_USER/lsa-htree/fixtures/linear/n1000"
+    }
+  ],
+  "loadavg": [
+    1.05,
+    0.81,
+    0.43
+  ],
+  "cpu_affinity": [
+    0,
+    1
+  ],
+  "/proc/uptime": "363.61 495.84\n",
+  "/proc/meminfo": "MemTotal:        4027056 kB\nMemFree:         2801536 kB\nMemAvailable:    3134028 kB\nBuffers:           90712 kB\nCached:           422832 kB\nSwapCached:            0 kB\nActive:           753068 kB\nInactive:         283768 kB\nActive(anon):     524296 kB\nInactive(anon):     1784 kB\nActive(file):     228772 kB\nInactive(file):   281984 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       2097148 kB\nSwapFree:        2097148 kB\nDirty:               744 kB\nWriteback:             0 kB\nAnonPages:        523472 kB\nMapped:           273244 kB\nShmem:              2760 kB\nKReclaimable:      49648 kB\nSlab:             118080 kB\nSReclaimable:      49648 kB\nSUnreclaim:        68432 kB\nKernelStack:        7184 kB\nPageTables:        10968 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     4110676 kB\nCommitted_AS:    3292708 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       34892 kB\nVmallocChunk:          0 kB\nPercpu:             1488 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:      161728 kB\nDirectMap2M:     4032512 kB\n",
+  "/proc/version": "Linux version 5.4.214-htree1 (EXPERIMENT_USER@EXPERIMENT_USER-VirtualBox) (gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2)) #1 SMP Wed Nov 18 01:05:40 KST 2026\n"
+}

@@ -1,0 +1,64 @@
+{
+  "bench": "/home/EXPERIMENT_USER/lsa-htree/bench/lookup_bench",
+  "condition": [
+    "binary=/home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n100000",
+    "linear=/home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n100000",
+    "hybrid4=/home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n100000",
+    "hybrid8=/home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n100000",
+    "hybrid16=/home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n100000"
+  ],
+  "files": 100000,
+  "positive": 10000,
+  "negative": 10000,
+  "modes": "warmdir,warm",
+  "rounds": 1,
+  "seed": 20261118,
+  "drop_caches": 2,
+  "cpu": 0,
+  "before_hook": "/home/EXPERIMENT_USER/lsa-htree/scripts/bench_before.sh",
+  "after_hook": "/home/EXPERIMENT_USER/lsa-htree/scripts/bench_after.sh",
+  "timeout": 120,
+  "output": "/home/EXPERIMENT_USER/lsa-htree/results/profile-n100000",
+  "uname": [
+    "Linux",
+    "EXPERIMENT_USER-VirtualBox",
+    "5.4.214-htree1",
+    "#1 SMP Wed Nov 18 01:05:40 KST 2026",
+    "x86_64",
+    "x86_64"
+  ],
+  "conditions": [
+    {
+      "label": "binary",
+      "directory": "/home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n100000"
+    },
+    {
+      "label": "linear",
+      "directory": "/home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n100000"
+    },
+    {
+      "label": "hybrid4",
+      "directory": "/home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n100000"
+    },
+    {
+      "label": "hybrid8",
+      "directory": "/home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n100000"
+    },
+    {
+      "label": "hybrid16",
+      "directory": "/home/EXPERIMENT_USER/lsa-htree/fixtures/indexed/n100000"
+    }
+  ],
+  "loadavg": [
+    0.92,
+    0.86,
+    0.5
+  ],
+  "cpu_affinity": [
+    0,
+    1
+  ],
+  "/proc/uptime": "484.78 616.66\n",
+  "/proc/meminfo": "MemTotal:        4027056 kB\nMemFree:         2800840 kB\nMemAvailable:    3136204 kB\nBuffers:           93136 kB\nCached:           423220 kB\nSwapCached:            0 kB\nActive:           753624 kB\nInactive:         284200 kB\nActive(anon):     522460 kB\nInactive(anon):     1780 kB\nActive(file):     231164 kB\nInactive(file):   282420 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:       2097148 kB\nSwapFree:        2097148 kB\nDirty:               684 kB\nWriteback:             0 kB\nAnonPages:        521520 kB\nMapped:           272004 kB\nShmem:              2756 kB\nKReclaimable:      49732 kB\nSlab:             117712 kB\nSReclaimable:      49732 kB\nSUnreclaim:        67980 kB\nKernelStack:        7136 kB\nPageTables:        10836 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     4110676 kB\nCommitted_AS:    3264244 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       34844 kB\nVmallocChunk:          0 kB\nPercpu:             1488 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:      161728 kB\nDirectMap2M:     4032512 kB\n",
+  "/proc/version": "Linux version 5.4.214-htree1 (EXPERIMENT_USER@EXPERIMENT_USER-VirtualBox) (gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2)) #1 SMP Wed Nov 18 01:05:40 KST 2026\n"
+}

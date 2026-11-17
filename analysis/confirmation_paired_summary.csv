@@ -1,0 +1,7 @@
+directory_files,dataset,kernel,cache_mode,label,pairs,median_time_change_percent,faster_pairs,validation,policy_over_baseline_median,policy_over_baseline_min,policy_over_baseline_max,baseline_label,comparison_kind
+1000,confirm-n1000,5.4.214-htree1,warmdir,binary_shadow,20,4.498225725364691,7,PASS,1.044982257253647,0.8050579580018067,1.500643536879261,binary,same_policy_control
+1000,confirm-n1000,5.4.214-htree1,warmdir,hybrid8,20,1.2763028393025566,8,PASS,1.0127630283930256,0.7478020960944034,1.277054924065494,binary,policy_change
+1000,confirm-n1000,5.4.214-htree1,warmdir,linear,20,0.17835706491546865,10,PASS,1.0017835706491547,0.769732231147824,1.284178667347787,binary,policy_change
+100000,confirm-n100000,5.4.214-htree1,warmdir,binary_shadow,20,0.09723267477239617,10,PASS,1.000972326747724,0.982097025298713,1.6641198463743965,binary,same_policy_control
+100000,confirm-n100000,5.4.214-htree1,warmdir,hybrid8,20,-0.2364670436217131,11,PASS,0.9976353295637829,0.9753828636924001,1.0233792685931384,binary,policy_change
+100000,confirm-n100000,5.4.214-htree1,warmdir,linear,20,8.973666060744945,0,PASS,1.0897366606074494,1.06470488510976,1.108465898761585,binary,policy_change

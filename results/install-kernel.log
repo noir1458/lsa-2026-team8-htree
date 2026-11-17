@@ -1,0 +1,44 @@
+sh ./arch/x86/boot/install.sh 5.4.214-htree1 arch/x86/boot/bzImage \
+	System.map "/boot"
+run-parts: executing /etc/kernel/postinst.d/dkms 5.4.214-htree1 /boot/vmlinuz-5.4.214-htree1
+ * dkms: running auto installation service for kernel 5.4.214-htree1
+   ...done.
+run-parts: executing /etc/kernel/postinst.d/initramfs-tools 5.4.214-htree1 /boot/vmlinuz-5.4.214-htree1
+update-initramfs: Generating /boot/initrd.img-5.4.214-htree1
+run-parts: executing /etc/kernel/postinst.d/unattended-upgrades 5.4.214-htree1 /boot/vmlinuz-5.4.214-htree1
+run-parts: executing /etc/kernel/postinst.d/update-notifier 5.4.214-htree1 /boot/vmlinuz-5.4.214-htree1
+run-parts: executing /etc/kernel/postinst.d/vboxadd 5.4.214-htree1 /boot/vmlinuz-5.4.214-htree1
+VirtualBox Guest Additions: Building the Guest Additions 7.2.16 modules for 
+kernel 5.4.214-htree1.
+VirtualBox Guest Additions: Building the main module.
+VirtualBox Guest Additions: Makefile:205: arch/x86/boot/Makefile-footer.gmk: No 
+such file or directory
+make[2]: *** No rule to make target 'arch/x86/boot/Makefile-footer.gmk'.  Stop.
+VirtualBox Guest Additions: Look at /var/log/vboxadd-setup.log to find out what 
+went wrong
+run-parts: executing /etc/kernel/postinst.d/xx-update-initrd-links 5.4.214-htree1 /boot/vmlinuz-5.4.214-htree1
+I: /boot/initrd.img.old is now a symlink to initrd.img-5.4.214-p1
+I: /boot/initrd.img is now a symlink to initrd.img-5.4.214-htree1
+run-parts: executing /etc/kernel/postinst.d/zz-update-grub 5.4.214-htree1 /boot/vmlinuz-5.4.214-htree1
+Sourcing file `/etc/default/grub'
+Sourcing file `/etc/default/grub.d/init-select.cfg'
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-5.15.0-139-generic
+Found initrd image: /boot/initrd.img-5.15.0-139-generic
+Found linux image: /boot/vmlinuz-5.15.0-67-generic
+Found initrd image: /boot/initrd.img-5.15.0-67-generic
+Found linux image: /boot/vmlinuz-5.15.0-SEOJUNGMIN+
+Found initrd image: /boot/initrd.img-5.15.0-SEOJUNGMIN+
+Found linux image: /boot/vmlinuz-5.4.214-p1
+Found initrd image: /boot/initrd.img-5.4.214-p1
+Found linux image: /boot/vmlinuz-5.4.214-htree1
+Found initrd image: /boot/initrd.img-5.4.214-htree1
+Found linux image: /boot/vmlinuz-5.4.214-b0
+Found initrd image: /boot/initrd.img-5.4.214-b0
+Found linux image: /boot/vmlinuz-5.4.214-SEOJUNGMIN+
+Found initrd image: /boot/initrd.img-5.4.214-SEOJUNGMIN+
+Found linux image: /boot/vmlinuz-5.4.214-SEOJUNGMIN
+Found initrd image: /boot/initrd.img-5.4.214-SEOJUNGMIN
+Found memtest86+ image: /boot/memtest86+.elf
+Found memtest86+ image: /boot/memtest86+.bin
+done

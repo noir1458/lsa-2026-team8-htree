@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "utc": "2026-11-17T16:10:01Z",
+  "uname": [
+    "Linux",
+    "EXPERIMENT_USER-VirtualBox",
+    "5.4.214-SEOJUNGMIN+",
+    "#3 SMP Wed Sep 23 19:19:44 KST 2026",
+    "x86_64",
+    "x86_64"
+  ],
+  "seed": 20261118,
+  "creation_order": "random",
+  "fixtures": [
+    {
+      "directory": "/home/EXPERIMENT_USER/lsa-htree/fixtures/linear/n100",
+      "files": 100,
+      "creation_order_sha256": "880b6be89aa3a9335dd0d13428c68cc4fee08695f2d6d5bce7938e5b1f09afa3",
+      "creation_elapsed_ns": 4345387,
+      "st_dev": 1809,
+      "st_ino": 12,
+      "st_size": 4096,
+      "st_blocks": 8,
+      "file_bytes": 0
+    },
+    {
+      "directory": "/home/EXPERIMENT_USER/lsa-htree/fixtures/linear/n1000",
+      "files": 1000,
+      "creation_order_sha256": "f87d5e36826c5ff8e4990e09fbf2dd22f5b72f0926e0c9366e96f2e2f0bd8b77",
+      "creation_elapsed_ns": 141850148,
+      "st_dev": 1809,
+      "st_ino": 28001,
+      "st_size": 24576,
+      "st_blocks": 48,
+      "file_bytes": 0
+    },
+    {
+      "directory": "/home/EXPERIMENT_USER/lsa-htree/fixtures/linear/n10000",
+      "files": 10000,
+      "creation_order_sha256": "841448b0d302ddd96b5cc58ccfe2f68784bce62a9ba99a09e62a8e928be19ab0",
+      "creation_elapsed_ns": 7867648321,
+      "st_dev": 1809,
+      "st_ino": 28002,
+      "st_size": 241664,
+      "st_blocks": 472,
+      "file_bytes": 0
+    }
+  ],
+  "note": "Filesystem features and inode INDEX flags must be verified separately."
+}

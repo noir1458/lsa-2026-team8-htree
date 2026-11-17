@@ -1,0 +1,3 @@
+--------------e----- /home/EXPERIMENT_USER/lsa-htree/fixtures/linear/n100
+--------------e----- /home/EXPERIMENT_USER/lsa-htree/fixtures/linear/n1000
+--------------e----- /home/EXPERIMENT_USER/lsa-htree/fixtures/linear/n10000

@@ -60,6 +60,14 @@ def write_csv(path, rows):
 
 
 class Analysis:
+    dataset_pattern = r"(stock|patched|index-control)-n(\d+)"
+    timed_policy_phases = {"patched", "index-control"}
+    paired_phases = {"patched"}
+
+    @staticmethod
+    def expected_search(label):
+        return {"binary": "0", "linear": "1"}.get(label, "2" if label.startswith("hybrid") else None)
+
     def __init__(self, results, include_latencies=False):
         self.results = results
         self.include_latencies = include_latencies
@@ -76,7 +84,7 @@ class Analysis:
 
     def load_trials(self):
         for path in sorted(self.results.glob("*-n*/summary.csv")):
-            match = re.fullmatch(r"(stock|patched|index-control)-n(\d+)", path.parent.name)
+            match = re.fullmatch(self.dataset_pattern, path.parent.name)
             if not match:
                 continue
             self.inputs.append(str(path))
@@ -139,7 +147,7 @@ class Analysis:
                     if str(record.get("query_seed", "")) != row["seed"]:
                         self.issue(prefix, "seed_record_mismatch", "CSV and trial JSON disagree", "error")
                 policy = key_values(Path(str(prefix) + ".policy"))
-                if phase in ("patched", "index-control"):
+                if phase in self.timed_policy_phases:
                     if policy is None:
                         self.issue(prefix, "missing_policy", "profile-off state and actual policy unverified")
                     else:
@@ -148,7 +156,7 @@ class Analysis:
                         if phase == "index-control":
                             expected = "0" if label in ("indexed", "unindexed") else None
                         else:
-                            expected = {"binary": "0", "linear": "1"}.get(label, "2" if label.startswith("hybrid") else None)
+                            expected = self.expected_search(label)
                         if expected is None or policy.get("search") != expected:
                             self.issue(prefix, "policy_mismatch", repr(policy), "error")
                         if label.startswith("hybrid") and policy.get("limit") != label[6:]:
@@ -266,11 +274,11 @@ class Analysis:
         pairs = []
         binary = {}
         for row in self.trials:
-            if row["phase"] == "patched" and row["label"] == "binary" and row["validation"] != "FAIL":
+            if row["phase"] in self.paired_phases and row["label"] == "binary" and row["validation"] != "FAIL":
                 key = (row["dataset"], row["kernel"], row["cache_mode"], row["round"], row["pass"])
                 binary.setdefault(key, []).append(row)
         for row in self.trials:
-            if row["phase"] != "patched" or row["label"] == "binary" or row["validation"] == "FAIL":
+            if row["phase"] not in self.paired_phases or row["label"] == "binary" or row["validation"] == "FAIL":
                 continue
             key = (row["dataset"], row["kernel"], row["cache_mode"], row["round"], row["pass"])
             matches = binary.get(key, [])
