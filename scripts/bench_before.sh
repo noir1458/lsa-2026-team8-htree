@@ -9,7 +9,7 @@ if [[ ! -e $base/htree_search ]]; then
 fi
 echo 0 > "$base/htree_profile"
 case "$label" in
-  binary|stock) echo 0 > "$base/htree_search" ;;
+  binary|stock|indexed|unindexed) echo 0 > "$base/htree_search" ;;
   linear) echo 1 > "$base/htree_search" ;;
   hybrid4|hybrid8|hybrid16)
     echo "${label#hybrid}" > "$base/htree_linear_limit"
