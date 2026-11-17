@@ -21,6 +21,18 @@ with tempfile.TemporaryDirectory(prefix='htree-analysis-check-') as td:
           w=csv.writer(f);w.writerow(['trial','pass','index','expected_exists','latency_ns','name']);w.writerows([[trial,0,0,1,20,'file'],[trial,0,1,0,40,'absent']])
     with (dataset/'summary.csv').open('w',newline='') as f:
       w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
+    control=res/'index-control-n1000';control.mkdir();control_rows=[]
+    for trial,label in enumerate(['indexed','unindexed']):
+      row=dict(base,trial=trial,round=0,label=label,seed=42,elapsed_ns=160 if label=='indexed' else 400)
+      control_rows.append(row);prefix=control/('trial_%04d_%s_warmdir'%(trial,label))
+      Path(str(prefix)+'.json').write_text(json.dumps({'returncode':0,'query_seed':42}))
+      Path(str(prefix)+'.policy').write_text('search=0 limit=4 profile_during_trial=0')
+      Path(str(prefix)+'.stats').write_text('find=0 nodes=0 comparisons=0 mismatches=0 leaf_errors=0')
+      with Path(str(prefix)+'.latencies.csv').open('w',newline='') as f:
+        w=csv.writer(f);w.writerow(['trial','pass','index','expected_exists','latency_ns','name'])
+        w.writerows([[trial,0,0,1,20,'file'],[trial,0,1,0,40,'absent']])
+    with (control/'summary.csv').open('w',newline='') as f:
+      w=csv.DictWriter(f,fieldnames=list(control_rows[0]));w.writeheader();w.writerows(control_rows)
     pdir=res/'profile-n100';pdir.mkdir();prefix=pdir/'trial_0000_hybrid4_warmdir'
     Path(str(prefix)+'.json').write_text(json.dumps({'returncode':0,'condition':{'label':'hybrid4'},'cache_mode':'warmdir'}))
     Path(str(prefix)+'.policy').write_text('search=2 limit=4 profile_during_trial=1')
@@ -35,6 +47,8 @@ with tempfile.TemporaryDirectory(prefix='htree-analysis-check-') as td:
     assert len(r['timing_summary'])==2
     assert all(x['loop_ns_per_query_median']==150 for x in r['timing_summary'])
     assert math.isclose(r['paired_summary'][0]['policy_over_binary_median'],.95)
+    assert r['timing_trials']==4 and r['index_control_trials']==2
+    assert math.isclose(r['index_control_paired_summary'][0]['indexed_over_unindexed_median'],.4)
     assert r['profile_summary'][0]['comparisons_per_node']==3
     assert r['profile_summary'][0]['leaf_entries_per_query']==5
     assert len(list(csv.DictReader((out/'query_kind_trials.csv').open())))==8
@@ -44,4 +58,4 @@ with tempfile.TemporaryDirectory(prefix='htree-analysis-check-') as td:
     r=json.loads((out/'analysis_summary.json').read_text())
     assert any(i['code']=='profiling_during_timing' for i in r['issues'])
     assert next(x for x in r['timing_summary'] if x['label']=='hybrid4')['trials']==1
-    print('analysis self-check passed: paired ratios, primary metric, gzip splits, profile counters, exclusion of profiled timing')
+    print('analysis self-check passed: paired ratios, primary metric, gzip splits, profile counters, exclusion of profiled timing, separate index-presence control')

@@ -76,7 +76,7 @@ class Analysis:
 
     def load_trials(self):
         for path in sorted(self.results.glob("*-n*/summary.csv")):
-            match = re.fullmatch(r"(stock|patched)-n(\d+)", path.parent.name)
+            match = re.fullmatch(r"(stock|patched|index-control)-n(\d+)", path.parent.name)
             if not match:
                 continue
             self.inputs.append(str(path))
@@ -139,13 +139,16 @@ class Analysis:
                     if str(record.get("query_seed", "")) != row["seed"]:
                         self.issue(prefix, "seed_record_mismatch", "CSV and trial JSON disagree", "error")
                 policy = key_values(Path(str(prefix) + ".policy"))
-                if phase == "patched":
+                if phase in ("patched", "index-control"):
                     if policy is None:
                         self.issue(prefix, "missing_policy", "profile-off state and actual policy unverified")
                     else:
                         if policy.get("profile_during_trial") not in ("0", "N", "n", "false"):
                             self.issue(prefix, "profiling_during_timing", repr(policy), "error")
-                        expected = {"binary": "0", "linear": "1"}.get(label, "2" if label.startswith("hybrid") else None)
+                        if phase == "index-control":
+                            expected = "0" if label in ("indexed", "unindexed") else None
+                        else:
+                            expected = {"binary": "0", "linear": "1"}.get(label, "2" if label.startswith("hybrid") else None)
                         if expected is None or policy.get("search") != expected:
                             self.issue(prefix, "policy_mismatch", repr(policy), "error")
                         if label.startswith("hybrid") and policy.get("limit") != label[6:]:
@@ -301,6 +304,45 @@ class Analysis:
                                      "validation": "PASS" if all(row["validation"] == "PASS" for row in rows) else "UNVERIFIED"})
         return summaries, pairs, paired_summary
 
+    def index_controls(self):
+        """HTree presence is a separate experiment with search policy fixed at 0."""
+        groups = {}
+        for row in self.trials:
+            if row["phase"] != "index-control" or row["validation"] == "FAIL":
+                continue
+            key = tuple(row[field] for field in ("dataset", "kernel", "cache_mode", "round", "pass"))
+            groups.setdefault(key, {}).setdefault(row["label"], []).append(row)
+        pairs = []
+        for key, labels in sorted(groups.items()):
+            if len(labels.get("indexed", [])) != 1 or len(labels.get("unindexed", [])) != 1:
+                self.issue(key[0], "no_unique_index_control_pair", str(key))
+                continue
+            indexed, unindexed = labels["indexed"][0], labels["unindexed"][0]
+            if any(indexed[field] != unindexed[field] for field in
+                   ("seed", "queries", "positive", "negative", "digest")):
+                self.issue(indexed["prefix"], "index_control_workload_mismatch", str(key), "error")
+                continue
+            ratio = indexed["loop_ns_per_query"] / unindexed["loop_ns_per_query"]
+            pairs.append({"directory_files": indexed["directory_files"],
+                          **dict(zip(("dataset", "kernel", "cache_mode", "round", "pass"), key)),
+                          "indexed_trial": indexed["trial"], "unindexed_trial": unindexed["trial"],
+                          "seed": indexed["seed"], "indexed_over_unindexed": ratio,
+                          "time_change_percent": (ratio - 1) * 100,
+                          "validation": "PASS" if indexed["validation"] == unindexed["validation"] == "PASS" else "UNVERIFIED"})
+        groups = {}
+        for row in pairs:
+            key = tuple(row[field] for field in ("directory_files", "dataset", "kernel", "cache_mode"))
+            groups.setdefault(key, []).append(row)
+        summaries = []
+        for key, rows in sorted(groups.items()):
+            ratios = [row["indexed_over_unindexed"] for row in rows]
+            summaries.append({**dict(zip(("directory_files", "dataset", "kernel", "cache_mode"), key)),
+                              "pairs": len(rows), **describe(ratios, "indexed_over_unindexed"),
+                              "median_time_change_percent": (statistics.median(ratios) - 1) * 100,
+                              "indexed_faster_pairs": sum(ratio < 1 for ratio in ratios),
+                              "validation": "PASS" if all(row["validation"] == "PASS" for row in rows) else "UNVERIFIED"})
+        return pairs, summaries
+
     def micro(self):
         path = self.results / "micro.csv"
         if not path.exists():
@@ -324,27 +366,39 @@ def main():
     analysis.load_trials()
     analysis.load_profiles()
     summaries, pairs, paired_summary = analysis.summarize()
+    index_pairs, index_paired_summary = analysis.index_controls()
     micro = analysis.micro()
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
-    artifacts = {"timing_trials.csv": analysis.trials, "timing_summary.csv": summaries,
+    timing_trials = [row for row in analysis.trials if row["phase"] != "index-control"]
+    timing_summary = [row for row in summaries if row["phase"] != "index-control"]
+    index_trials = [row for row in analysis.trials if row["phase"] == "index-control"]
+    index_summary = [row for row in summaries if row["phase"] == "index-control"]
+    artifacts = {"timing_trials.csv": timing_trials, "timing_summary.csv": timing_summary,
                  "paired_trials.csv": pairs, "paired_summary.csv": paired_summary,
                  "profile_summary.csv": analysis.profiles, "micro_summary.csv": micro,
-                 "query_kind_trials.csv": analysis.splits}
+                 "query_kind_trials.csv": [row for row in analysis.splits if row["phase"] != "index-control"],
+                 "index_control_trials.csv": index_trials, "index_control_summary.csv": index_summary,
+                 "index_control_paired_trials.csv": index_pairs,
+                 "index_control_paired_summary.csv": index_paired_summary,
+                 "index_control_query_kind_trials.csv": [row for row in analysis.splits if row["phase"] == "index-control"]}
     for name, rows in artifacts.items():
         write_csv(output / name, rows)
     errors = sum(item["severity"] == "error" for item in analysis.issues)
     report = {"status": "no_data" if not analysis.inputs else "validation_errors" if errors else "ok",
-              "inputs": analysis.inputs, "timing_trials": len(analysis.trials),
+              "inputs": analysis.inputs, "timing_trials": len(timing_trials),
+              "index_control_trials": len(index_trials),
               "coverage": analysis.coverage,
               "validation_errors": errors, "validation_warnings": len(analysis.issues) - errors,
-              "issues": analysis.issues, "timing_summary": summaries, "paired_summary": paired_summary,
+              "issues": analysis.issues, "timing_summary": timing_summary, "paired_summary": paired_summary,
+              "index_control_summary": index_summary, "index_control_paired_summary": index_paired_summary,
               "profile_summary": analysis.profiles, "micro_summary": micro,
               "notes": ["Primary timing is elapsed_ns / queries, not input mean_ns.",
                         "Percentiles in timing_summary are medians of trial percentiles, not pooled-query percentiles.",
                         "Queries within a trial are not independent experimental replications.",
                         "Paired ratios use the same patched dataset, kernel, cache mode, round, pass and query workload.",
                         "No stock/patched pairing or causal significance claim is made across separate boots.",
+                        "Index-control pairs compare HTree presence at fixed binary policy; they are separate from search-policy changes.",
                         "FAIL trials are excluded from timing summaries; UNVERIFIED trials remain explicitly marked.",
                         "Profiling replays searches and must never supply performance timing.",
                         "Small effects require judging run-order drift and variability; min/max overlap is not an equivalence test."]}
