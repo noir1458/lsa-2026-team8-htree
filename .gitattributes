@@ -1,0 +1,3 @@
+# Preserve captured bytes and the CSV writer's RFC 4180 line endings.
+*.csv -text whitespace=cr-at-eol
+results/** -text -whitespace
