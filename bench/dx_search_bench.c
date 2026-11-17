@@ -41,19 +41,18 @@ static void check(void) {
 }
 int main(int argc,char **argv) {
     unsigned iterations=argc>1?(unsigned)strtoul(argv[1],0,10):2000000;
-    unsigned rounds=argc>2?(unsigned)strtoul(argv[2],0,10):9;
+    unsigned rounds=argc>2?(unsigned)strtoul(argv[2],0,10):10;
     if(!iterations||!rounds)return 2;
     check();
     struct entry e[513]; uint32_t queries[8192];
-    unsigned sizes[]={1,2,4,8,16,32,64,128,256,508};
-    const char *names[]={"binary","linear","hybrid4","hybrid8","hybrid16"};
-    unsigned thresholds[]={0,512,4,8,16};
+    unsigned sizes[]={1,2,4,8,16,32,64,83,128,256,436,442,507,510};
+    const char *names[]={"binary","linear"};
     for(unsigned i=0;i<8192;i++)queries[i]=random32();
     puts("round,count,mode,iterations,total_ns,ns_per_search,checksum");
-    for(unsigned r=0;r<rounds;r++)for(unsigned s=0;s<10;s++) {
+    for(unsigned r=0;r<rounds;r++)for(unsigned s=0;s<sizeof(sizes)/sizeof(sizes[0]);s++) {
         unsigned n=sizes[s];fill(e,n);
-        for(unsigned k=0;k<5;k++) {
-            unsigned mode=(k+r)%5; unsigned (*fn)(const struct entry*,unsigned,uint32_t)=n<=thresholds[mode]?linear:binary;
+        for(unsigned k=0;k<2;k++) {
+            unsigned mode=(k+r)%2; unsigned (*fn)(const struct entry*,unsigned,uint32_t)=mode?linear:binary;
             uint64_t sum=0;for(unsigned i=0;i<8192;i++)sum+=fn(e,n,queries[i]);sink=sum;
             uint64_t t=ns();sum=0;
             for(unsigned i=0;i<iterations;i++)sum+=fn(e,n,queries[i&8191]);

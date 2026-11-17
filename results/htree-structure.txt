@@ -1,0 +1,19 @@
+directory=n1000
+Root node dump:
+	 Indirect levels: 0
+Number of entries (count): 8
+Number of entries (limit): 507
+directory=n10000
+Root node dump:
+	 Indirect levels: 0
+Number of entries (count): 83
+Number of entries (limit): 507
+directory=n100000
+Root node dump:
+	 Indirect levels: 1
+Number of entries (count): 2
+Number of entries (limit): 507
+Number of entries (count): 436
+Number of entries (limit): 510
+Number of entries (count): 442
+Number of entries (limit): 510

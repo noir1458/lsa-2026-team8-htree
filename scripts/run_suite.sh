@@ -4,6 +4,11 @@ root=${1:?usage: run_suite.sh EXPERIMENT_DIR stock-or-patched [rounds]}
 phase=${2:?}
 rounds=${3:-10}
 [[ $phase = stock || $phase = patched ]] || exit 2
+if [[ $phase = patched ]]; then
+  [[ -e /sys/module/ext4/parameters/htree_search ]] || { echo 'Experimental kernel required' >&2; exit 2; }
+else
+  [[ ! -e /sys/module/ext4/parameters/htree_search ]] || { echo 'Unmodified baseline kernel required' >&2; exit 2; }
+fi
 for n in 100 1000 10000 100000; do
   queries=$n
   (( queries > 10000 )) && queries=10000

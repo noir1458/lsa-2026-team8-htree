@@ -2,7 +2,11 @@
 set -euo pipefail
 label=$3
 base=/sys/module/ext4/parameters
-[[ -e $base/htree_search ]] || exit 0
+if [[ ! -e $base/htree_search ]]; then
+  [[ $label = stock ]] && exit 0
+  echo 'Patched policy requested but HTree controls are absent' >&2
+  exit 2
+fi
 echo 0 > "$base/htree_profile"
 case "$label" in
   binary|stock) echo 0 > "$base/htree_search" ;;

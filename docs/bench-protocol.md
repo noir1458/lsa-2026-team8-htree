@@ -151,3 +151,26 @@ measurement overhead must be disclosed or measured separately from timings.
 
 The separate dx-search microbenchmark tests predecessor-search semantics and
 isolated CPU cost. It cannot establish ext4 end-to-end speedup by itself.
+
+## Directory-mutation correctness check
+
+```sh
+python3 scripts/check_mutations.py --root /mnt/indexed --files 1200 \
+  --drop-caches 2 --require-index --output results/mutation-check.json
+```
+
+The script makes its own `check-mut-UUID/src` and `dst` directories and creates
+more than 1000 files in each. It checks the directory INDEX flags and runs binary,
+linear and hybrid limits 4/8/16 through same-directory rename, hardlink, removal
+of the original link, cross-directory rename, replacement rename, unlink and
+recreation. Full scans check the exact filename set, recorded inode identities,
+regular-file type, link counts, sizes and bytes. Each policy restores the original
+name/content/link-count digest before the next one. The initial sysfs search mode
+and hybrid limit are restored in a finally block, including ordinary failures
+and SIGINT/SIGTERM interruption. SIGKILL or machine failure cannot run cleanup.
+
+This script removes only its own UUID fixture after all checks and parameter
+restoration succeed. On failure it retains that fixture and a JSON failure report.
+Use the isolated test mount, not a production filesystem. Its full-traversal
+durations are diagnostic, not performance measurements. Python does not match
+the `lookup_bench` profiling filter; use the measured C workload for call counts.

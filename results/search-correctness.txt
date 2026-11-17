@@ -1,0 +1,5 @@
+environment=Darwin arm64
+compiler=Apple clang version 21.0.0 (clang-2100.3.34.2)
+sanitizers=address,undefined
+scope=extracted kernel search helpers; not a kernel build or filesystem test
+exact_kernel_helper_checks=527360 passed
