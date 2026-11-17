@@ -1,0 +1,7 @@
+/bench/lookup_bench
+/bench/dx_search_bench
+*.o
+*.img
+*.pptx
+__pycache__/
+.DS_Store
